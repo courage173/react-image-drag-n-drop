@@ -29,23 +29,37 @@ function ReactDrag({ images, styles, onDragFinish, opacity= 0.5 }: IAppProps): J
     }
     e.dataTransfer.dropEffect = "move"
   }
-  const handleDrop = (e: any): void => {
+  const handleDrop = (e: any) => {
     if(e.stopPropagation){
       e.stopPropagation()
     }
     if(drageSrcEl && drageSrcEl.src != e.target.src){
-      const d = drageSrcEl.src 
+      const dragged = drageSrcEl.src 
+      const replaced = e.target.src
       drageSrcEl.src = e.target.src;
-      e.target.src = d;
+      e.target.src = dragged;
       e.target.style.opacity  = 1
       drageSrcEl.style.opacity = 1
-       onDragFinish('')
+      const draggedId: String = drageSrcEl.id;
+      const replacedId: String = e.target.id
+      const responseObj = {
+        draggedFile: {
+          index: Number(draggedId),
+          src: dragged
+        },
+        replacedFile: {
+          index: Number(replacedId),
+          src: replaced
+        }
+      }
+       return onDragFinish(responseObj)
     }
   }
   return (
       <>
       {images.map((im, id) => (
         <img src={im} alt="new image" style={styles} draggable={true}
+        id={id.toString()}
         key={im+id.toString()}
         onDragStart={handleDragStart}
         onDrop={handleDrop}

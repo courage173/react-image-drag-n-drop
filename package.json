@@ -6,8 +6,8 @@
   "scripts": {
     "build": "rollup -c",
     "watch": "rollup -c -w",
-    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
-    "lint": "tslint -p tsconfig.json",
+    "format": "prettier --write \"src/**/*.tsx\" \"src/**/*.js\"",
+    "lint": "tslint -c tslint.json src/**/*.{ts,tsx} --fix --format verbose",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
